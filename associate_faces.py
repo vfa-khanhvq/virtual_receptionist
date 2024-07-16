@@ -10,22 +10,32 @@ collection_id = 'my_face_collection'
 response = client.list_faces(CollectionId=collection_id)
 
 # Extract and print all unique names (external image IDs)
-unique_names = set()
+names = {}
 
 while True:
     faces = response['Faces']
     
     for face in faces:
         print(face)
-        unique_names.add(face['ExternalImageId'])
+        name = face['ExternalImageId']
+        face = face['FaceId']
+        if name not in names:
+            names[name] = []
+        names[name].append(face)
     
     # Check if there are more faces to retrieve
     if 'NextToken' in response:
         next_token = response['NextToken']
-        response = client.list_users(CollectionId=collection_id, NextToken=next_token)
+        response = client.list_faces(CollectionId=collection_id, NextToken=next_token)
     else:
         break
 
 print("Names in the collection:")
-for name in unique_names:
+for name in names:
     print(name)
+    print(names[name])
+    response = client.associate_faces(
+            CollectionId=collection_id,
+            UserId=name,
+            FaceIds=names[name]
+        )

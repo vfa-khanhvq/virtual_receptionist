@@ -22,7 +22,7 @@ def image_to_bytes(image):
 def detect_and_identify_faces(frame):
     try:
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = face_cascade.detectMultiScale(gray, scaleFactor=2, minNeighbors=5)
+        faces = face_cascade.detectMultiScale(gray, scaleFactor=1.05, minNeighbors=5)
         
         face_bounding_boxes = []
         names = []
@@ -63,7 +63,7 @@ def detect_and_identify_faces(frame):
         return [], []
 
 # Initialize the webcam
-cap = cv2.VideoCapture(0)  # Adjust camera index as needed
+cap = cv2.VideoCapture(1)  # Adjust camera index as needed
 last_detection_time = time.time()
 
 # Initialize names and bounding_boxes to empty lists
@@ -74,6 +74,12 @@ user_data = {
     'khanhvq': 'Khánh Vũ',
     'huutc': 'Hữu Michael',
     'khanhld': 'Khánh LD',
+    'duyna': 'Duy',
+    'tudl': 'Tú',
+    'baopg': 'Bảo',
+    'nguyennhp': 'Nguyên PHP',
+    'thangnt': 'Thăng',
+    'tuyenbq': 'Tuyến BQ',
 }
 
 while True:
